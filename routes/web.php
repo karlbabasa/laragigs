@@ -19,37 +19,45 @@ use App\Http\Controllers\ListingController;
 */
 
 
+
 //ALL LISTINGS
 Route::get('/', [ListingController::class, 'index']);
 
+//Manage Listings
+Route::get('/listings/manage', [ListingController::class, 'manage'])->middleware('auth');
+
 // SHOW CREATE FORM
-Route::get('/listings/create', [ListingController::class, 'create']);
+Route::get('/listings/create', [ListingController::class, 'create'])->middleware('auth');
 
 //STORE LISTING DATA
-Route::post('/listings', [ListingController::class, 'store']);
+Route::post('/listings', [ListingController::class, 'store'])->middleware('auth');
  
 //SHOW EDIT FORM
-Route::get('/listings/{listing}/edit', [ListingController::class, 'edit']);
+Route::get('/listings/{listing}/edit', [ListingController::class, 'edit'])->middleware('auth');;
 
 //EDIT SUBMIT TO UPDATE
-Route::put('/listings/{listing}', [ListingController::class, 'update']);
+Route::put('/listings/{listing}', [ListingController::class, 'update'])->middleware('auth');
 
 //DELETE
-Route::delete('/listings/{listing}', [ListingController::class, 'destroy']);
-
+Route::delete('/listings/{listing}', [ListingController::class, 'destroy'])->middleware('auth');
 
 //SINGLE LISTINGS
 Route::get('/listings/{listing}', [ListingController::class, 'show']);
 
 //Show Register/Create Form
-Route::get('/register', [UserController::class, 'create']);
+Route::get('/register', [UserController::class, 'create'])->middleware('guest');
 
 //CREATE NEW USER
 Route::post('/users', [UserController::class, 'store']);
 
 //LOGOUT
-Route::post('/logout', [UserController::class, 'logout']);
+Route::post('/logout', [UserController::class, 'logout'])->middleware('auth');
 
+//SHOW LOGIN FORM
+Route::get('/login', [UserController::class, 'login'])->name('login')->middleware('guest');
+
+//Log in User
+Route::post('/users/authenticate', [UserController::class, 'authenticate']);
 
 // Common Resource Routes:
 // index - show all listings
