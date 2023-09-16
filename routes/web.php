@@ -1,10 +1,11 @@
 <?php
 
-use App\Http\Controllers\ListingController;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
 use App\Models\Listing;
+use Illuminate\Http\Request;
 use PhpParser\Node\Expr\List_;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\ListingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,8 +22,34 @@ use PhpParser\Node\Expr\List_;
 //ALL LISTINGS
 Route::get('/', [ListingController::class, 'index']);
 
+// SHOW CREATE FORM
+Route::get('/listings/create', [ListingController::class, 'create']);
+
+//STORE LISTING DATA
+Route::post('/listings', [ListingController::class, 'store']);
+ 
+//SHOW EDIT FORM
+Route::get('/listings/{listing}/edit', [ListingController::class, 'edit']);
+
+//EDIT SUBMIT TO UPDATE
+Route::put('/listings/{listing}', [ListingController::class, 'update']);
+
+//DELETE
+Route::delete('/listings/{listing}', [ListingController::class, 'destroy']);
+
+
 //SINGLE LISTINGS
 Route::get('/listings/{listing}', [ListingController::class, 'show']);
+
+//Show Register/Create Form
+Route::get('/register', [UserController::class, 'create']);
+
+//CREATE NEW USER
+Route::post('/users', [UserController::class, 'store']);
+
+//LOGOUT
+Route::post('/logout', [UserController::class, 'logout']);
+
 
 // Common Resource Routes:
 // index - show all listings
