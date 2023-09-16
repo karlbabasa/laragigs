@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Listing;
 use Illuminate\Http\Request;
 
+use function Laravel\Prompts\search;
+
 class ListingController extends Controller
 {
     // show all listing
@@ -12,7 +14,7 @@ class ListingController extends Controller
         //dd(request('tag'));
         return view('listings.index', [
             //'heading' => 'Latest Listings',
-            'listings' => Listing::latest()->filter(request(['tag']))->get() //all
+            'listings' => Listing::latest()->filter(request(['tag', 'search' ]))->get() //all
         ]);
     }
 
